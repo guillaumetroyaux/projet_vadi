@@ -13,8 +13,23 @@ class Matches
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column]
+    private ?int $idConversation = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getIdConversation(): ?int
+    {
+        return $this->idConversation;
+    }
+
+    public function setIdConversation(int $idConversation): self
+    {
+        $this->idConversation = $idConversation;
+
+        return $this;
     }
 }

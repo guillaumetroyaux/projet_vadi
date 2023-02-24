@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProfilRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProfilRepository::class)]
@@ -33,6 +35,14 @@ class Profil
 
     #[ORM\Column]
     private ?int $popularity = null;
+
+    #[ORM\ManyToMany(targetEntity: Conversation::class, mappedBy: 'profil')]
+    private Collection $idConversation;
+
+    public function __construct()
+    {
+        $this->idConversation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +129,33 @@ class Profil
     public function setPopularity(int $popularity): self
     {
         $this->popularity = $popularity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Conversation>
+     */
+    public function getIdConversation(): Collection
+    {
+        return $this->idConversation;
+    }
+
+    public function addIdConversation(Conversation $idConversation): self
+    {
+        if (!$this->idConversation->contains($idConversation)) {
+            $this->idConversation->add($idConversation);
+            $idConversation->addProfil($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdConversation(Conversation $idConversation): self
+    {
+        if ($this->idConversation->removeElement($idConversation)) {
+            $idConversation->removeProfil($this);
+        }
 
         return $this;
     }
