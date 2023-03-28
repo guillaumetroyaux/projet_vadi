@@ -1,25 +1,107 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Home
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    .Intro{ margin-left:auto;margin-right:auto;margin-top:40px;width: 60%;font-family: 'Poppins', sans-serif;font-style: normal;font-size: 48px;line-height: 62px;text-align: center;color: #262F4C; }
-    .SousIntro{ margin-left:auto;margin-right:auto;margin-top:20px;width: 40%;font-family: 'Poppins', sans-serif;font-style: normal;font-size: 10px;line-height: 14px;text-align: center;color: #262F4C; }
-    .video{margin-left:auto;margin-right:auto; margin-top:50px;width: 80%;text-align: center;}
-</style>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px / 1.5 sans-serif;
+        }
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+        .Intro {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 40px;
+            width: 60%;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-size: 48px;
+            line-height: 62px;
+            text-align: center;
+            color: #262F4C;
+        }
+        .SousIntro {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            width: 40%;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-size: 10px;
+            line-height: 14px;
+            text-align: center;
+            color: #262F4C;
+        }
+        .video {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 70px;
+            width: 80%;
+            text-align: center;
+        }
+        .inscription {
+            padding-left:65px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 70px;
+            margin-bottom:100px;
+            width: 60%;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            background: #262F4C;
+            border-radius: 56px;
+            column-count: 3;
+            padding-bottom:45px;
+            padding-right:45px;
+            padding-top:30px;
+    
+        }
+        .titre {
+            font-size: 32px;
+            color: #FAFBFF;
+            line-height: 60px;
 
-<div class="Intro">
-Découvrez une nouvelle expérience de voyage
-</div>
-<div class="SousIntro">
-Partagez une expérience de voyage inoubliable avec des personnes qui vous ressemble. VADI, c’est l’assurance de rencontres unique et de vacances exceptionnels.
-</div>
-<div class="video">
-<video src="../../../public/video/video.mp4" controls>
-</video>
-</div>
+        }
+        .contenu {
+            font-size: 11px;
+            color: #FAFBFF;
+            line-height: 20px;
+        }
+        .boutton{
+            background-color :#FAFBFF;
+            text-align: center;
+            border-radius:30px;
+        }
+
+
+    </style>
+
+    <div class="Intro">
+        Découvrez une nouvelle expérience de voyage
+    </div>
+    <div class="SousIntro">
+        Partagez une expérience de voyage inoubliable avec des personnes qui vous ressemble. VADI, c’est l’assurance de rencontres unique et de vacances exceptionnels.
+    </div>
+    <div class="video">
+        <video src="../../../public/video/video.mp4" controls></video>
+    </div>
+    <div class="inscription">
+        <div class="titre">Gratuit</div>
+        <div class="contenu">Créer un compte gratuitement<br>Une communauté de nomades<br>Un voyage tout préparé<br>Large choix de destinations<br><br></div>
+        <button type="button" id="boutton">REJOINS-NOUS</button>
+        <div class="titre">159€</div>
+        <div class="contenu">Créer un compte gratuitement<br>Une communauté de nomades<br>Un voyage tout préparé<br>Large choix de destinations<br><br></div>
+        <button type="button" id="boutton">REJOINS-NOUS</button>
+        <div class="titre">89€</div>
+        <div class="contenu">Créer un compte gratuitement<br>Une communauté de nomades<br>Un voyage tout préparé<br>Large choix de destinations<br><br></div>
+        <button type="button" id="boutton"><a href ="{{ path('inscription')}}">REJOINS-NOUS</button>
+    </div>
 
 {% endblock %}
