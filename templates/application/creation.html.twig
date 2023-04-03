@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% form_theme formCreationProfil 'bootstrap_4_layout.html.twig'%}
+
+{% block title %}Creation du Profil
+{% endblock %}
+
+{% block body %}
+    <h1>Création d'un profil</h1>
+    {{form(formCreationProfil)}}
+
+{% endblock %}
