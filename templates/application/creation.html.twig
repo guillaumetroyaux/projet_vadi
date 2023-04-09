@@ -1,11 +1,70 @@
 {% extends 'base.html.twig' %}
-{% form_theme formCreationProfil 'bootstrap_4_layout.html.twig'%}
+{% form_theme formCreationProfil 'bootstrap_4_layout.html.twig' %}
 
 {% block title %}Creation du Profil
 {% endblock %}
 
 {% block body %}
-    <h1>Création d'un profil</h1>
-    {{form(formCreationProfil)}}
+    <style>
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+            margin-bottom: 40px;
+
+        }
+        .espacer {
+            margin-bottom: 10px;
+        }
+        .centrer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+
+
+        }
+    </style>
+    <div class="form">
+        <h1 class="h3 mb-3 font-weight-normal">Créer votre profil</h1>
+        {{ form_start(formCreationProfil) }}
+        <div class="espacer">
+            {{ form_row( formCreationProfil.Age, {'attr':{'placeholder':"Votre âge" }}
+            ) }}
+        </div>
+        <div class="espacer">
+            {{ form_row( formCreationProfil.Prenom, {'attr':{'placeholder':"Votre prénom" }}
+            ) }}
+        </div>
+        <div class="espacer">
+            {{ form_row( formCreationProfil.Image, {'attr':{'placeholder':"URL de votre image" }}
+            ) }}
+        </div>
+        <div class="espacer">
+            {{ form_row( formCreationProfil.centreInterets, {'attr':{'placeholder':"Vos centres d'intérêts" }}
+            ) }}
+        </div>
+        <div class="espacer">
+            {{ form_row( formCreationProfil.Destinations_souhaitees, {'attr':{'placeholder':"Vos destinations de rêve" }}
+            ) }}
+        </div>
+        <div class="espacer">
+            {{ form_row( formCreationProfil.Genre_Souhaite, {'attr':{'placeholder':"Le genre que vous recherchez" }}
+            ) }}
+        </div>
+        <div class="espacer">
+            {{ form_row( formCreationProfil.Budget, {'attr':{'placeholder':"Votre budget moyen" }}
+            ) }}
+        </div>
+        <div class="espacer">
+            <div class="centrer">
+                {{ form_row(formCreationProfil.Enregistrer) }}
+            </div>
+        </div>
+        {{ form_end(formCreationProfil) }}
+    </div>
 
 {% endblock %}

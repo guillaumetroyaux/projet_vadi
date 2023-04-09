@@ -1,53 +1,73 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion
+{% endblock %}
 
 {% block body %}
-<style>
-.formulaire {
-  display: flex;
-  justify-content: center;
-}
-</style>
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <style>
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+            margin-bottom: 40px;
 
-    {% if app.user %}
-        <div class="formulaire">
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-        </div>
-    {% endif %}
-    <br><br>
-    <div class="formulaire">
-    <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
-    </div>
-    <br><br>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        }
+        .espacer {
+            margin-top: 10px;
+        }
+        .centrer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 40px;
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >   
-    <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Se rappeller de moi
-            </label>
-        </div>
-        <br><br>
-    <div class="formulaire">
-    <button class="btn btn-lg btn-primary" type="submit">
-        Se connecter
-    </button>
-    </div>
-    <br>
-    <div class="formulaire">
-    Vous n'avez pas de compte .. <a href="/register">s'inscrire</a><br><br><br><br>
-    </div>
-</form>
-{% endblock %}
+        }
+    </style>
+    <div class="form">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        {% if app.user %}
+            <div class="mb-3">
+                Vous êtes connecté a
+                {{ app.user.userIdentifier }},
+                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            </div>
+        {% endif %}
+
+        <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
+
+        <form method="post">
+            <label for="inputEmail" class="espacer">Email</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                <label for="inputPassword" class="espacer">Mot de passe</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <div class="centrer">
+                            <div class="checkbox mb-3">
+                                <label>
+                                    <input type="checkbox" name="_remember_me">
+                                        Se rappeller de moi
+                                    </label>
+                                </div>
+                                <button class="btn btn-lg btn-primary" type="submit">
+                                    Se connecter
+                                </button>
+                            </div>
+                        </form>
+
+                        <br>
+                            <div class="centrer">
+                                Vous n'avez pas de compte ..
+                                <a href="/register">s'inscrire</a>
+                                <br>
+                                    <br>
+                                        <br>
+                                            <br></div>
+                                        </div>
+                                    {% endblock %}

@@ -16,10 +16,14 @@ class CreationProfilController extends AbstractController
     #[Route('/creationProfil', name: 'creation')]
     public function create(Request $request, EntityManagerInterface $entityManager){
         
-        $profil =new Profil();
+        $user = $this->getUser(); // Récupérer l'utilisateur actuellement connecté
+        
+        $profil = new Profil();
+        $profil->setUser($user); // Définir l'utilisateur pour ce profil
         $form = $this ->createFormBuilder($profil)
                       ->add('Age')
                       ->add('Prenom')
+                      ->add('Image')
                       ->add('centreInterets')
                       ->add('Destinations_souhaitees')
                       ->add('Genre_Souhaite')
@@ -27,6 +31,14 @@ class CreationProfilController extends AbstractController
                       ->add('Enregistrer', SubmitType::class, array('label' =>'Créer un profil'))
                       ->getForm();
 
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($profil);
+            $entityManager->flush();
+            $this->addFlash('success', 'Profil créé avec succès!');
+            return $this->redirectToRoute('home');
+        }
 
 
         

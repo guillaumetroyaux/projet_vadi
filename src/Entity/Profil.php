@@ -3,8 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProfilRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProfilRepository::class)]
@@ -33,16 +32,15 @@ class Profil
     #[ORM\Column(nullable: true)]
     private ?int $Budget = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $popularity = null;
 
-    #[ORM\ManyToMany(targetEntity: Conversation::class, mappedBy: 'profil')]
-    private Collection $idConversation;
 
-    public function __construct()
-    {
-        $this->idConversation = new ArrayCollection();
-    }
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $image = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -133,30 +131,28 @@ class Profil
         return $this;
     }
 
-    /**
-     * @return Collection<int, Conversation>
-     */
-    public function getIdConversation(): Collection
+    public function getImage()
     {
-        return $this->idConversation;
+        return $this->image;
     }
 
-    public function addIdConversation(Conversation $idConversation): self
+    public function setImage($image): self
     {
-        if (!$this->idConversation->contains($idConversation)) {
-            $this->idConversation->add($idConversation);
-            $idConversation->addProfil($this);
-        }
+        $this->image = $image;
 
         return $this;
     }
 
-    public function removeIdConversation(Conversation $idConversation): self
+    public function getUser(): ?User
     {
-        if ($this->idConversation->removeElement($idConversation)) {
-            $idConversation->removeProfil($this);
-        }
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
+
 }
