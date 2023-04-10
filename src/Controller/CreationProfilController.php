@@ -23,7 +23,7 @@ class CreationProfilController extends AbstractController
         $form = $this ->createFormBuilder($profil)
                       ->add('Age')
                       ->add('Prenom')
-                      ->add('Image')
+                      ->add('Photo')
                       ->add('centreInterets')
                       ->add('Destinations_souhaitees')
                       ->add('Genre_Souhaite')

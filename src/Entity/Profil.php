@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\ProfilRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProfilRepository::class)]
 class Profil
@@ -36,11 +39,11 @@ class Profil
     private ?int $popularity = null;
 
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $image = null;
-
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo = null;
 
     public function getId(): ?int
     {
@@ -131,18 +134,6 @@ class Profil
         return $this;
     }
 
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    public function setImage($image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -155,4 +146,15 @@ class Profil
         return $this;
     }
 
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
 }
