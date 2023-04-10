@@ -3,13 +3,17 @@
 {% endblock %}
 {% block body %}
     {% for profil in profils %}
-    <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{ profil.prenom }} {{ profil.age }} ans</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">En savoir plus</a>
-  </div>
-</div>
-    {% endfor %}
-{% endblock %}
+        <div class="card" style="width: 18rem;">
+            {% if profil.photo %}
+                <img src="{{ asset('uploads/'~profil.photo) }}" class="card-img-top" alt="{{ profil.prenom }}'s photo">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ profil.prenom }}
+                        {{ profil.age }}
+                        ans</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">En savoir plus</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endblock %}
