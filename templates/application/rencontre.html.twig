@@ -2,18 +2,36 @@
 {% block title %}Place de rencontre
 {% endblock %}
 {% block body %}
-    {% for profil in profils %}
-        <div class="card" style="width: 18rem;">
-            {% if profil.photo %}
-                <img src="{{ asset('uploads/'~profil.photo) }}" class="card-img-top" alt="{{ profil.prenom }}'s photo">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ profil.prenom }}
-                        {{ profil.age }}
-                        ans</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">En savoir plus</a>
+    <div class="vignette">
+        {% for profil in profils %}
+            <div class="contenu">
+                <div class="card" style="width: 18rem;" class="card">
+                    {% if profil.photoProfils %}
+                        <img src="{{ asset('uploads/'~profil.photoProfils) }}" class="card-img-top" alt="photo de {{ profil.prenom }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ profil.prenom }}
+                                {{ profil.age }}
+                                ans</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">En savoir plus</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+        <style>
+            .vignette {
+                margin-top: 50px;
+                margin-bottom: 50px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .contenu {
+                width: 20%; /* pour que chaque carte occupe 20% de la largeur */
+                padding: 10px; /* pour ajouter de l'espace entre les cartes */
+            }
+        </style>
     {% endblock %}

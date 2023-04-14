@@ -32,26 +32,26 @@
         <h1 class="h3 mb-3 font-weight-normal">Créer votre profil</h1>
         {{ form_start(formCreationProfil) }}
         <div class="espacer">
-            {{ form_row( formCreationProfil.Age, {'attr':{'placeholder':"Votre âge" }}
+            {{ form_row( formCreationProfil.age, {'attr':{'placeholder':"Votre âge" }}
             ) }}
         </div>
         <div class="espacer">
-            {{ form_row( formCreationProfil.Prenom, {'attr':{'placeholder':"Votre prénom" }}
+            {{ form_row( formCreationProfil.prenom, {'attr':{'placeholder':"Votre prénom" }}
             ) }}
         </div>
         <div class="espacer">
-            {{form_row(formCreationProfil.photo)}}
+            {{form_row(formCreationPhoto.photoFile)}}
         </div>
         <div class="espacer">
             {{ form_row( formCreationProfil.centreInterets, {'attr':{'placeholder':"Vos centres d'intérêts" }}
             ) }}
         </div>
         <div class="espacer">
-            {{ form_row( formCreationProfil.Destinations_souhaitees, {'attr':{'placeholder':"Vos destinations de rêve" }}
+            {{ form_row( formCreationProfil.DestinationsSouhaitees, {'attr':{'placeholder':"Vos destinations de rêve" }}
             ) }}
         </div>
         <div class="espacer">
-            {{ form_row( formCreationProfil.Genre_Souhaite, {'attr':{'placeholder':"Le genre que vous recherchez" }}
+            {{ form_row( formCreationProfil.genreSouhaite, {'attr':{'placeholder':"Le genre que vous recherchez" }}
             ) }}
         </div>
         <div class="espacer">

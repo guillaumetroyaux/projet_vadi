@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ProfilRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ProfilRepository::class)]
 class Profil
@@ -42,8 +42,13 @@ class Profil
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $photo = null;
+    #[ORM\OneToMany(mappedBy: 'profil', targetEntity: PhotoProfil::class)]
+    private Collection $photoProfils;
+
+    public function __construct()
+    {
+        $this->photoProfils = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -146,14 +151,33 @@ class Profil
         return $this;
     }
 
-    public function getPhoto(): ?string
+
+    /**
+     * @return Collection<int, PhotoProfil>
+     */
+    public function getPhotoProfils(): Collection
     {
-        return $this->photo;
+        return $this->photoProfils;
     }
 
-    public function setPhoto(?string $photo): self
+    public function addPhotoProfil(PhotoProfil $photoProfil): self
     {
-        $this->photo = $photo;
+        if (!$this->photoProfils->contains($photoProfil)) {
+            $this->photoProfils->add($photoProfil);
+            $photoProfil->setProfil($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhotoProfil(PhotoProfil $photoProfil): self
+    {
+        if ($this->photoProfils->removeElement($photoProfil)) {
+            // set the owning side to null (unless already changed)
+            if ($photoProfil->getProfil() === $this) {
+                $photoProfil->setProfil(null);
+            }
+        }
 
         return $this;
     }
