@@ -16,9 +16,8 @@ class PhotoProfil
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'photoProfils')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Profil $profil = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Profil $Profil = null;
 
     public function getId(): ?int
     {
@@ -39,12 +38,12 @@ class PhotoProfil
 
     public function getProfil(): ?Profil
     {
-        return $this->profil;
+        return $this->Profil;
     }
 
-    public function setProfil(?Profil $profil): self
+    public function setProfil(?Profil $Profil): self
     {
-        $this->profil = $profil;
+        $this->Profil = $Profil;
 
         return $this;
     }

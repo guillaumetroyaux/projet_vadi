@@ -19,10 +19,7 @@ class ProfilType extends AbstractType
             ->add('DestinationsSouhaitees')
             ->add('genreSouhaite')
             ->add('Budget')
-            ->add('popularity')
-            ->add('user')
-            ->add('enregistrer',SubmitType::class)
-        ;
+            ->add('enregistrer', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

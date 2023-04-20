@@ -35,9 +35,16 @@ class CreationProfilController extends AbstractController
             $entityManager->persist($profil);
             $entityManager->flush();
         }
+        $this->addFlash('success', 'Profil créé avec succès!');
+        return $this->redirectToRoute('image');
 
-        $idProfil = $entityManager->getRepository(Profil::class)->findOneBy(['user' => $this->getUser()->getId()]);
-        // $idProfil = $entityManager->getRepository(Profil::class)->findOneBy(['user' => $this->getUser()]);
+        return $this->render('application/creation.html.twig', ['formCreationProfil' => $form->createView()]);
+    }
+    #[Route('/AjoutImage', name: 'image')]
+    public function addPhoto(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
+    {
+
+        $idProfil = $entityManager->getRepository(Profil::class)->findOneBy(['user' => $this->getUser()]);
         // $idProfil = $profil->find(['user' => $this->getUser()]);
         $photoProfil = new PhotoProfil();
         $form2 = $this->createForm(PhotoProfilType::class, $photoProfil);
@@ -45,9 +52,10 @@ class CreationProfilController extends AbstractController
 
         if ($form2->isSubmitted() && $form2->isValid()) {
 
-            $photoFile = $form2->get('photoProfils')->getData();
+            $photoFile = $form2->get('nom')->getData();
             $photoProfil = new PhotoProfil();
-            $photoProfil->setProfil($idProfil->getId());
+            $photoProfil->setProfil($idProfil);
+            // $photoProfil->setProfil($idProfil->getId());
             // $photoProfil->setProfil($idProfil);
 
 
@@ -67,14 +75,17 @@ class CreationProfilController extends AbstractController
                 $photoProfil->setNom($newFilename);
             }
 
+            $user = $this->getUser(); // Récupérer l'utilisateur actuellement connecté
+            $profil = new Profil();
+
             $entityManager->persist($photoProfil);
             $entityManager->flush();
-            $this->addFlash('success', 'Profil créé avec succès!');
+            $this->addFlash('success', 'Image enregistrée!');
             return $this->redirectToRoute('home');
         }
 
 
 
-        return $this->render('application/creation.html.twig', ['formCreationProfil' => $form->createView(), 'formCreationPhoto' => $form2->createView()]);
+        return $this->render('application/image.html.twig', ['formCreationPhoto' => $form2->createView()]);
     }
 }

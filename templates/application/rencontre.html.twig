@@ -6,9 +6,11 @@
         {% for profil in profils %}
             <div class="contenu">
                 <div class="card" style="width: 18rem;" class="card">
-                    {% if profil.photoProfils %}
-                        <img src="{{ asset('uploads/'~profil.photoProfils) }}" class="card-img-top" alt="photo de {{ profil.prenom }}">
-                        {% endif %}
+                    {% for photo in photoProfil %}
+                        {% if profil.id == photo.profil.id %}
+                            <img src="{{ asset('Images/' ~ photo.nom) }}" class="card-img-top" alt="photo de {{ profil.prenom }}">
+                            {% endif %}
+                        {% endfor %}
                         <div class="card-body">
                             <h5 class="card-title">{{ profil.prenom }}
                                 {{ profil.age }}

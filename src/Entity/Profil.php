@@ -42,13 +42,8 @@ class Profil
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'profil', targetEntity: PhotoProfil::class)]
-    private Collection $photoProfils;
-
-    public function __construct()
-    {
-        $this->photoProfils = new ArrayCollection();
-    }
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?PhotoProfil $PhotoProfil = null;
 
     public function getId(): ?int
     {
@@ -151,33 +146,19 @@ class Profil
         return $this;
     }
 
-
-    /**
-     * @return Collection<int, PhotoProfil>
-     */
-    public function getPhotoProfils(): Collection
+    public function __toString()
     {
-        return $this->photoProfils;
+        return $this->id;
     }
 
-    public function addPhotoProfil(PhotoProfil $photoProfil): self
+    public function getPhotoProfil(): ?PhotoProfil
     {
-        if (!$this->photoProfils->contains($photoProfil)) {
-            $this->photoProfils->add($photoProfil);
-            $photoProfil->setProfil($this);
-        }
-
-        return $this;
+        return $this->PhotoProfil;
     }
 
-    public function removePhotoProfil(PhotoProfil $photoProfil): self
+    public function setPhotoProfil(?PhotoProfil $PhotoProfil): self
     {
-        if ($this->photoProfils->removeElement($photoProfil)) {
-            // set the owning side to null (unless already changed)
-            if ($photoProfil->getProfil() === $this) {
-                $photoProfil->setProfil(null);
-            }
-        }
+        $this->PhotoProfil = $PhotoProfil;
 
         return $this;
     }

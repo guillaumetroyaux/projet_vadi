@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Profil;
+use App\Entity\PhotoProfil;
+
 
 
 class PlaceRencontreController extends AbstractController
@@ -16,8 +18,10 @@ class PlaceRencontreController extends AbstractController
     {
         $repository =  $entityManager->getRepository(Profil::class);
         $profils = $repository->findAll();
+        $repository =  $entityManager->getRepository(PhotoProfil::class);
+        $photoProfil = $repository->findAll();
         return $this->render('application/rencontre.html.twig', [
-            'profils' => $profils,
+            'profils' => $profils, 'photoProfil' => $photoProfil
         ]);
     }
 }
