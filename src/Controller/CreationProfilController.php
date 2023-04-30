@@ -34,10 +34,12 @@ class CreationProfilController extends AbstractController
             $profil->setUser($this->getUser());
             $entityManager->persist($profil);
             $entityManager->flush();
+            $user->setProfil($profil);
+            $entityManager->persist($user);
+            $entityManager->flush();
         }
-        $this->addFlash('success', 'Profil créé avec succès!');
-        return $this->redirectToRoute('image');
 
+        $this->addFlash('success', 'Profil créé avec succès!');
         return $this->render('application/creation.html.twig', ['formCreationProfil' => $form->createView()]);
     }
     #[Route('/AjoutImage', name: 'image')]
@@ -66,7 +68,8 @@ class CreationProfilController extends AbstractController
 
                 try {
                     $photoFile->move(
-                        $this->getParameter('upload_directory', $newFilename)
+                        $this->getParameter('upload_directory'),
+                        $newFilename
                     );
                 } catch (FileException $e) {
                     // handle exception

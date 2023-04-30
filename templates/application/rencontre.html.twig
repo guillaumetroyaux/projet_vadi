@@ -2,10 +2,10 @@
 {% block title %}Place de rencontre
 {% endblock %}
 {% block body %}
-    <div class="vignette">
+    <div class="vignette d-flex justify-content-center align-items-center flex-wrap">
         {% for profil in profils %}
             <div class="contenu">
-                <div class="card" style="width: 18rem;" class="card">
+                <div class="card mb-4" style="max-width: 18rem;">
                     {% for photo in photoProfil %}
                         {% if profil.id == photo.profil.id %}
                             <img src="{{ asset('Images/' ~ photo.nom) }}" class="card-img-top" alt="photo de {{ profil.prenom }}">
@@ -15,25 +15,45 @@
                             <h5 class="card-title">{{ profil.prenom }}
                                 {{ profil.age }}
                                 ans</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">En savoir plus</a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <style>
-            .vignette {
-                margin-top: 50px;
-                margin-bottom: 50px;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .contenu {
-                width: 20%; /* pour que chaque carte occupe 20% de la largeur */
-                padding: 10px; /* pour ajouter de l'espace entre les cartes */
-            }
-        </style>
-    {% endblock %}
+                            <p class="card-text">Centres d'intérêts :
+                                {{ profil.centreInterets }}
+                                <br>Destinations souhaitées :
+                                    {{ profil.DestinationsSouhaitees }}<br>Intéressé par :
+                                        {{ profil.genreSouhaite }}<br>Budget moyen :
+                                            {{ profil.budget }}</p>
+                                        <a href="{{ path('rencontre', {'profilId':profil.id}) }}" class="btn btn-primary">Liker</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <style>
+                            .vignette {
+                                margin-top: 50px;
+                                margin-bottom: 50px;
+                            }
+                            .card {
+                                margin-bottom: 20px;
+                                margin-right: 10px;
+                                margin-left: 10px;
+                            }
+                            /* Pour les écrans de petite taille */
+                            @media screen and(max-width: 767px) {
+                                .contenu {
+                                    width: 100%;
+                                }
+                            }
+                            /* Pour les écrans de taille moyenne */
+                            @media screen and(min-width: 768px) and(max-width: 991px) {
+                                .contenu {
+                                    width: 50%;
+                                }
+                            }
+                            /* Pour les écrans larges */
+                            @media screen and(min-width: 992px) {
+                                .vignette {
+                                    display: flex;
+                                    justify-content: center;
+                                }
+                            }
+                        </style>
+                    {% endblock %}

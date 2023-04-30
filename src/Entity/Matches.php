@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MatchesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MatchesRepository::class)]
@@ -15,6 +17,14 @@ class Matches
 
     #[ORM\Column]
     private ?int $idConversation = null;
+
+    #[ORM\ManyToMany(targetEntity: profil::class, inversedBy: 'matches')]
+    private Collection $profil;
+
+    public function __construct()
+    {
+        $this->profil = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -29,6 +39,30 @@ class Matches
     public function setIdConversation(int $idConversation): self
     {
         $this->idConversation = $idConversation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, profil>
+     */
+    public function getProfil(): Collection
+    {
+        return $this->profil;
+    }
+
+    public function addProfil(profil $profil): self
+    {
+        if (!$this->profil->contains($profil)) {
+            $this->profil->add($profil);
+        }
+
+        return $this;
+    }
+
+    public function removeProfil(profil $profil): self
+    {
+        $this->profil->removeElement($profil);
 
         return $this;
     }

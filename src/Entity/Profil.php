@@ -45,6 +45,14 @@ class Profil
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?PhotoProfil $PhotoProfil = null;
 
+    #[ORM\ManyToMany(targetEntity: Matches::class, mappedBy: 'profil')]
+    private Collection $matches;
+
+    public function __construct()
+    {
+        $this->matches = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -159,6 +167,33 @@ class Profil
     public function setPhotoProfil(?PhotoProfil $PhotoProfil): self
     {
         $this->PhotoProfil = $PhotoProfil;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Matches>
+     */
+    public function getMatches(): Collection
+    {
+        return $this->matches;
+    }
+
+    public function addMatch(Matches $match): self
+    {
+        if (!$this->matches->contains($match)) {
+            $this->matches->add($match);
+            $match->addProfil($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatch(Matches $match): self
+    {
+        if ($this->matches->removeElement($match)) {
+            $match->removeProfil($this);
+        }
 
         return $this;
     }

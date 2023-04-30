@@ -27,47 +27,67 @@
 
         }
     </style>
-    <div class="form">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-        {% if app.user %}
-            <div class="mb-3">
-                Vous êtes connecté a
-                {{ app.user.userIdentifier }},
-                <a href="{{ path('app_logout') }}">Se déconnecter</a>
-            </div>
-        {% endif %}
+    <body>
+        <div class="form">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            {% if app.user %}
+                <div class="form">
+                    Vous êtes connecté a
+                    {{ app.user.userIdentifier }},
+                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                </div>
+                {% if not app.user.profil %}
+                    <div class="alert alert-warning">
+                        Vous n'avez pas encore complété votre profil. Veuillez le faire dès que possible.
+                        <a href="{{ path('creation') }}">
+                            Compléter son profil</a>
 
-        <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
+                    </div>
+                {% endif %}
+                {% if app.user.profil %}
+                    <div class="form">
+                        Découvrir des profils a liker
+                        <a href="{{ path('rencontre') }}">
+                            Cosulter des profils</a>
 
-        <form method="post">
-            <label for="inputEmail" class="espacer">Email</label>
-            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-                <label for="inputPassword" class="espacer">Mot de passe</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                    </div>
+                {% endif %}
+            {% endif %}
 
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                        <div class="centrer">
-                            <div class="checkbox mb-3">
-                                <label>
-                                    <input type="checkbox" name="_remember_me">
-                                        Se rappeller de moi
-                                    </label>
-                                </div>
-                                <button class="btn btn-lg btn-primary" type="submit">
-                                    Se connecter
-                                </button>
-                            </div>
-                        </form>
+            {% if not app.user %}
 
-                        <br>
-                            <div class="centrer">
-                                Vous n'avez pas de compte ..
-                                <a href="/register">s'inscrire</a>
-                                <br>
-                                    <br>
-                                        <br>
-                                            <br></div>
+                <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
+
+                <form method="post">
+                    <label for="inputEmail" class="espacer">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                        <label for="inputPassword" class="espacer">Mot de passe</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                <div class="centrer">
+                                    <div class="checkbox mb-3">
+                                        <label>
+                                            <input type="checkbox" name="_remember_me">
+                                                Se rappeller de moi
+                                            </label>
                                         </div>
+                                        <button class="btn btn-lg btn-primary" type="submit">
+                                            Se connecter
+                                        </button>
+                                    </div>
+                                </form>
+                                <br>
+                                    <div class="centrer">
+                                        Vous n'avez pas de compte ..
+                                        <a href="/register">s'inscrire</a>
+                                        <br>
+                                            <br>
+                                                <br>
+                                                    <br></div>
+                                                </div>
+                                            {% endif %}
+                                        </body>
                                     {% endblock %}
