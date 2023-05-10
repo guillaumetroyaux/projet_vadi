@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -40,6 +42,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Profil $profil = null;
+
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy:'user')]
+    private $likes;
+
+    public function __construct()
+    {
+        $this->likes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -162,5 +172,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

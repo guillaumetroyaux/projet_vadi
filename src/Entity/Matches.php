@@ -21,6 +21,14 @@ class Matches
     #[ORM\ManyToMany(targetEntity: profil::class, inversedBy: 'matches')]
     private Collection $profil;
 
+
+    
+    #[ORM\ManyToOne(targetEntity: Profil::class, inversedBy: 'matches')]
+    private $profil1;
+
+    #[ORM\ManyToOne(targetEntity: Profil::class, inversedBy: 'matches')]
+    private $profil2;
+
     public function __construct()
     {
         $this->profil = new ArrayCollection();
@@ -63,6 +71,30 @@ class Matches
     public function removeProfil(profil $profil): self
     {
         $this->profil->removeElement($profil);
+
+        return $this;
+    }
+
+    public function getProfil1(): ?Profil
+    {
+        return $this->profil1;
+    }
+
+    public function setProfil1(?Profil $profil1): self
+    {
+        $this->profil1 = $profil1;
+
+        return $this;
+    }
+
+    public function getProfil2(): ?Profil
+    {
+        return $this->profil2;
+    }
+
+    public function setProfil2(?Profil $profil2): self
+    {
+        $this->profil2 = $profil2;
 
         return $this;
     }

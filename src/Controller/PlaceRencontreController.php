@@ -34,15 +34,39 @@ class PlaceRencontreController extends AbstractController
     #[Route('/place-rencontre/{profilId}', name: 'match')]
     public function match(EntityManagerInterface $entityManager, Request $request, $profilId): Response
     {
-        $repository =  $entityManager->getRepository(Profil::class);
-        $profils = $repository->findAll();
-        $repository =  $entityManager->getRepository(PhotoProfil::class);
-        $photoProfil = $repository->findAll();
+        // Récupération du profil de l'utilisateur actuel
+        $user = $this->getUser();
+        $userRepository = $entityManager->getRepository(User::class);
+        $currentUser = $userRepository->find($user->id);
 
+        // Récupération du profil liké
+        $profilRepository = $entityManager->getRepository(Profil::class);
+        $likedProfil = $profilRepository->find($profilId);
 
+        // Vérification si l'utilisateur a déjà liké ce profil
+        $alreadyLiked = false;
+        foreach ($currentUser->getLikes() as $like) {
+            if ($like->getProfil()->getId() == $likedProfil->getId()) {
+                $alreadyLiked = true;
+                break;
+            }
+        }
 
-        return $this->render('application/rencontre.html.twig', [
-            'profils' => $profils, 'photoProfil' => $photoProfil,
-        ]);
+        // Si l'utilisateur n'a pas encore liké ce profil, on crée une correspondance (match)
+        if (!$alreadyLiked) {
+            $match = new Matches();
+            $match->setProfil1($currentUser->getProfil());
+            $match->setProfil2($likedProfil);
+            $entityManager->persist($match);
+            $entityManager->flush();
+
+            // On ajoute la correspondance à l'utilisateur actuel
+            $currentUser->addMatch($match);
+            $entityManager->persist($currentUser);
+            $entityManager->flush();
+        }
+
+        // Redirection vers la page de rencontre
+        return $this->redirectToRoute('rencontre');
     }
 }
