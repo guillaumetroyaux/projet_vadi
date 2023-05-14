@@ -20,8 +20,6 @@ class Matches
 
     #[ORM\ManyToMany(targetEntity: profil::class, inversedBy: 'matches')]
     private Collection $profil;
-
-
     
     #[ORM\ManyToOne(targetEntity: Profil::class, inversedBy: 'matches')]
     private $profil1;

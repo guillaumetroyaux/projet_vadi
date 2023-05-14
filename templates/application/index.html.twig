@@ -5,115 +5,197 @@
 
 {% block body %}
     <style>
-        <style>
-            .example-wrapper {
-                margin: 1em auto;
-                max-width: 800px;
-                width: 95%;
-                font: 18px / 1.5 sans-serif;
-            }
-            .example-wrapper code {
-                background: #F5F5F5;
-                padding: 2px 6px;
-            }
-            .Intro {
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 40px;
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px / 1.5 sans-serif;
+        }
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+        .Intro {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 40px;
+            width: 60%;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-size: 48px;
+            line-height: 62px;
+            text-align: center;
+            color: #262F4C;
+        }
+        .SousIntro {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            width: 40%;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-size: 10px;
+            line-height: 14px;
+            text-align: center;
+            color: #262F4C;
+        }
+
+        .inscription {
+            padding: 30px 45px 45px 65px;
+            margin: 70px auto 100px;
+            width: 60%;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            background: #262F4C;
+            border-radius: 56px;
+        }
+        .titre {
+            font-size: 32px;
+            color: #FAFBFF;
+            line-height: 60px;
+
+        }
+        .contenu {
+            font-size: 11px;
+            color: #FAFBFF;
+            line-height: 20px;
+        }
+        .boutton {
+            background-color: #FAFBFF;
+            text-align: center;
+        }
+        .center {
+            margin-top: 70px;
+            display: flex;
+            justify-content: center;
+        }
+        .bouttoninscription {
+            border-radius: 8px;
+        }
+        .nounderline {
+            text-decoration: none;
+            color: inherit;
+        }
+        .responsive-video {
+            width: 100%;
+            height: auto;
+        }
+
+        .video-container {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1200px;
+        }
+        .block {
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .image-element {
+            padding: 20px;
+        }
+
+        .text-element {
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+        }
+
+        .image-element img {
+            width: 100%;
+            height: auto;
+        }
+
+        .text-container {
+            height: 100%;
+        }
+
+        .title {
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 32px;
+            line-height: 40px;
+            color: #000000;
+        }
+
+        @media screen and(min-width: 992px) {
+            .image-element {
                 width: 60%;
-                font-family: 'Poppins', sans-serif;
-                font-style: normal;
-                font-size: 48px;
-                line-height: 62px;
-                text-align: center;
-                color: #262F4C;
             }
-            .SousIntro {
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 20px;
+
+            .text-element {
                 width: 40%;
-                font-family: 'Poppins', sans-serif;
-                font-style: normal;
-                font-size: 10px;
-                line-height: 14px;
-                text-align: center;
-                color: #262F4C;
             }
+        }
 
-            .inscription {
-                padding: 30px 45px 45px 65px;
-                margin: 70px auto 100px;
-                width: 60%;
-                font-family: 'Poppins', sans-serif;
-                font-style: normal;
-                background: #262F4C;
-                border-radius: 56px;
-            }
-            .titre {
-                font-size: 32px;
-                color: #FAFBFF;
-                line-height: 60px;
 
-            }
-            .contenu {
-                font-size: 11px;
-                color: #FAFBFF;
-                line-height: 20px;
-            }
-            .boutton {
-                background-color: #FAFBFF;
-                text-align: center;
-                border-radius: ;
-            }
-            .center {
-                margin-top: 70px;
-                display: flex;
-                justify-content: center;
-            }
-            @media screen and(max-width: 600px) {}
-        </style>
-        <body>
-            <div class="Intro">
-                Découvrez une nouvelle expérience de voyage
-            </div>
-            <div class="SousIntro">
-                Partagez une expérience de voyage inoubliable avec des personnes qui vous ressemble. VADI, c’est l’assurance de rencontres unique et de vacances exceptionnels.
-            </div>
-            <div class="center">
-                <video autoplay loop>
+        @media screen and(max-width: 600px) {}
+    </style>
+    <body>
+        <div class="Intro">
+            Découvrez une nouvelle expérience de voyage
+        </div>
+        <div class="SousIntro">
+            Partagez une expérience de voyage inoubliable avec des personnes qui vous ressemble. VADI, c’est l’assurance de rencontres unique et de vacances exceptionnels.
+        </div>
+        <div class="center">
+            <div class="video-container">
+                <video autoplay loop class="responsive-video">
                     <source src="{{ asset('video/video.mp4') }}" type="video/mp4" width="70%" height="auto">
                         Votre navigateur ne supporte pas la balise video.
                     </video>
                 </div>
+            </div>
+            <div class="center">
+                <img src="{{ asset('Images/Concept.png') }}" width="70%" height="auto"></div>
                 <div class="center">
-                    <img src="{{ asset('Images/Concept.png') }}" width="70%" height="auto"></div>
+                    <img src="{{ asset('Images/Sejour.png') }}" width="70%" height="auto"></div>
                     <div class="center">
-                        <img src="{{ asset('Images/Sejour.png') }}" width="70%" height="auto"></div>
-                        <div class="center">
-                            <img src="{{ asset('Images/Securite.png') }}" width="70%" height="auto"></div>
+                        <img src="{{ asset('Images/Securite.png') }}" width="70%" height="auto"></div>
+                        <div class="container">
+                            <div class="row block">
+                                <div class="col-lg-8 col-md-6 image-element">
+                                    <img src="{{ asset('Images/paysage.jpg') }}" alt="Image paysage"></div>
+                                    <div class="col-lg-4 col-md-6 text-element">
+                                        <div class="text-container">
+                                            <h2 class="title">Un voyage en toute sécurité</h2>
+                                            <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget nisl sed lorem aliquet tincidunt ut ac enim. Vestibulum tincidunt tempus venenatis.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="inscription">
                                 <div class="row">
                                     <div class="col">
                                         <div class="titre">Gratuit</div>
-                                        <div class="contenu">Créer un compte gratuitement<br>Une communauté de nomades<br>Un voyage tout préparé<br>Large choix de destinations<br>
+                                        <div class="contenu">
+                                            Créer un compte gratuitement<br>Une communauté de nomades<br>Un voyage tout préparé<br>Large choix de destinations<br>
                                                             <br></div>
-                                                            <button type="button" id="boutton">REJOINS-NOUS</button>
+                                                            <button type="button" id="boutton" class="bouttoninscription">
+                                                                <a href="{{ path('app_login') }}" class="nounderline">REJOINS-NOUS</a>
+                                                            </button>
                                                         </div>
                                                         <div class="col">
                                                             <div class="titre">159€</div>
-                                                            <div class="contenu">Créer un compte gratuitement<br>Une communauté de nomades<br>Un voyage tout préparé<br>Large choix de destinations<br>
+                                                            <div class="contenu">
+                                                                Par voyage (séjour personnalisable)<br>Une communauté de nomades<br>Un voyage tout préparé<br>Large choix de destinations<br>
                                                                                 <br></div>
-                                                                                <button type="button" id="boutton">REJOINS-NOUS</button>
+                                                                                <button type="button" id="boutton" class="bouttoninscription">
+                                                                                    <a href="{{ path('app_login') }}" class="nounderline">REJOINS-NOUS</a>
+                                                                                </button>
                                                                             </div>
                                                                             <div class="col">
                                                                                 <div class="titre">89€</div>
-                                                                                <div class="contenu">Créer un compte gratuitement<br>Une communauté de nomades<br>Un voyage tout préparé<br>Large choix de destinations<br>
+                                                                                <div class="contenu">
+                                                                                    Par an sans engagement<br>Une communauté de nomades<br>Un voyage tout préparé<br>Large choix de destinations<br>
                                                                                                     <br></div>
-                                                                                                    <button type="button" id="boutton">
-                                                                                                        <a href="{{ path('app_login') }}">REJOINS-NOUS</button>
-                                                                                                    </div>
+                                                                                                    <button type="button" id="boutton" class="bouttoninscription">
+                                                                                                        <a href="{{ path('app_login') }}" class="nounderline">REJOINS-NOUS</a>
+                                                                                                    </button>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </body>
-                                                                                    {% endblock %}
+                                                                                        </div>
+                                                                                    </body>
+                                                                                {% endblock %}

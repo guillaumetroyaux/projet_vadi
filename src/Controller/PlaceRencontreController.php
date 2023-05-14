@@ -13,6 +13,8 @@ use App\Entity\PhotoProfil;
 use App\Form\LikeType;
 use SebastianBergmann\Environment\Console;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Like;
+
 
 
 
@@ -38,11 +40,28 @@ class PlaceRencontreController extends AbstractController
         $user = $this->getUser();
         $userRepository = $entityManager->getRepository(User::class);
         $currentUser = $userRepository->find($user->id);
-
+    
         // Récupération du profil liké
         $profilRepository = $entityManager->getRepository(Profil::class);
         $likedProfil = $profilRepository->find($profilId);
-
+    
+        // Créer le formulaire de like
+        $like = new Like();
+        $formCreationLike = $this->createForm(LikeType::class, $like);
+        $formCreationLike->handleRequest($request);
+    
+        // Traiter le formulaire de like
+        if ($formCreationLike->isSubmitted() && $formCreationLike->isValid()) {
+            $like->setUser($currentUser);
+            $like->setProfil($likedProfil);
+    
+            $entityManager->persist($like);
+            $entityManager->flush();
+    
+            // Redirection vers la page de rencontre
+            return $this->redirectToRoute('rencontre');
+        }
+    
         // Vérification si l'utilisateur a déjà liké ce profil
         $alreadyLiked = false;
         foreach ($currentUser->getLikes() as $like) {
@@ -51,7 +70,7 @@ class PlaceRencontreController extends AbstractController
                 break;
             }
         }
-
+    
         // Si l'utilisateur n'a pas encore liké ce profil, on crée une correspondance (match)
         if (!$alreadyLiked) {
             $match = new Matches();
@@ -59,13 +78,13 @@ class PlaceRencontreController extends AbstractController
             $match->setProfil2($likedProfil);
             $entityManager->persist($match);
             $entityManager->flush();
-
+    
             // On ajoute la correspondance à l'utilisateur actuel
             $currentUser->addMatch($match);
             $entityManager->persist($currentUser);
             $entityManager->flush();
         }
-
+    
         // Redirection vers la page de rencontre
         return $this->redirectToRoute('rencontre');
     }

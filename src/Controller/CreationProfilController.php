@@ -15,6 +15,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Entity\PhotoProfil;
 use App\Form\ProfilType;
 use App\Form\PhotoProfilType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 
 
@@ -37,8 +39,8 @@ class CreationProfilController extends AbstractController
             $user->setProfil($profil);
             $entityManager->persist($user);
             $entityManager->flush();
+            return new RedirectResponse($this->generateUrl('image'));
         }
-
         $this->addFlash('success', 'Profil créé avec succès!');
         return $this->render('application/creation.html.twig', ['formCreationProfil' => $form->createView()]);
     }
@@ -84,7 +86,7 @@ class CreationProfilController extends AbstractController
             $entityManager->persist($photoProfil);
             $entityManager->flush();
             $this->addFlash('success', 'Image enregistrée!');
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_login');
         }
 
 

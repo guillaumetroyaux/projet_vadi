@@ -18,42 +18,41 @@
                             <p class="card-text">Centres d'intérêts :
                                 {{ profil.centreInterets }}
                                 <br>Destinations souhaitées :
-                                    {{ profil.DestinationsSouhaitees }}<br>Intéressé par :
-                                        {{ profil.genreSouhaite }}<br>Budget moyen :
-                                            {{ profil.budget }}</p>
-                                        <a href="{{ path('rencontre', {'profilId':profil.id}) }}" class="btn btn-primary">Liker</a>
-                                    </div>
+                                    {{ profil.DestinationsSouhaitees }}<br>Budget moyen :
+                                        {{ profil.budget }}</p>
+                                    <a href="{{ path('rencontre', {'profilId':profil.id}) }}" class="btn btn-primary">Liker</a>
                                 </div>
                             </div>
-                        {% endfor %}
-                        <style>
+                        </div>
+                    {% endfor %}
+                    <style>
+                        .vignette {
+                            margin-top: 50px;
+                            margin-bottom: 50px;
+                        }
+                        .card {
+                            margin-bottom: 20px;
+                            margin-right: 10px;
+                            margin-left: 10px;
+                        }
+                        /* Pour les écrans de petite taille */
+                        @media screen and(max-width: 767px) {
+                            .contenu {
+                                width: 100%;
+                            }
+                        }
+                        /* Pour les écrans de taille moyenne */
+                        @media screen and(min-width: 768px) and(max-width: 991px) {
+                            .contenu {
+                                width: 50%;
+                            }
+                        }
+                        /* Pour les écrans larges */
+                        @media screen and(min-width: 992px) {
                             .vignette {
-                                margin-top: 50px;
-                                margin-bottom: 50px;
+                                display: flex;
+                                justify-content: center;
                             }
-                            .card {
-                                margin-bottom: 20px;
-                                margin-right: 10px;
-                                margin-left: 10px;
-                            }
-                            /* Pour les écrans de petite taille */
-                            @media screen and(max-width: 767px) {
-                                .contenu {
-                                    width: 100%;
-                                }
-                            }
-                            /* Pour les écrans de taille moyenne */
-                            @media screen and(min-width: 768px) and(max-width: 991px) {
-                                .contenu {
-                                    width: 50%;
-                                }
-                            }
-                            /* Pour les écrans larges */
-                            @media screen and(min-width: 992px) {
-                                .vignette {
-                                    display: flex;
-                                    justify-content: center;
-                                }
-                            }
-                        </style>
-                    {% endblock %}
+                        }
+                    </style>
+                {% endblock %}
