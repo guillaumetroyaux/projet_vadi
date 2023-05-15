@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Conversation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,14 +11,8 @@ use App\Entity\Profil;
 use App\Entity\User;
 use App\Entity\Matches;
 use App\Entity\PhotoProfil;
-use App\Form\LikeType;
-use SebastianBergmann\Environment\Console;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Like;
-
-
-
-
 
 class PlaceRencontreController extends AbstractController
 {
@@ -39,29 +34,14 @@ class PlaceRencontreController extends AbstractController
         // Récupération du profil de l'utilisateur actuel
         $user = $this->getUser();
         $userRepository = $entityManager->getRepository(User::class);
-        $currentUser = $userRepository->find($user->id);
-    
+        $currentUser = $userRepository->find($user->getId());
+        $curentProfil = $currentUser->getProfil();
+
         // Récupération du profil liké
         $profilRepository = $entityManager->getRepository(Profil::class);
         $likedProfil = $profilRepository->find($profilId);
-    
-        // Créer le formulaire de like
-        $like = new Like();
-        $formCreationLike = $this->createForm(LikeType::class, $like);
-        $formCreationLike->handleRequest($request);
-    
-        // Traiter le formulaire de like
-        if ($formCreationLike->isSubmitted() && $formCreationLike->isValid()) {
-            $like->setUser($currentUser);
-            $like->setProfil($likedProfil);
-    
-            $entityManager->persist($like);
-            $entityManager->flush();
-    
-            // Redirection vers la page de rencontre
-            return $this->redirectToRoute('rencontre');
-        }
-    
+        $likedUser = $likedProfil->getUser();
+
         // Vérification si l'utilisateur a déjà liké ce profil
         $alreadyLiked = false;
         foreach ($currentUser->getLikes() as $like) {
@@ -70,21 +50,40 @@ class PlaceRencontreController extends AbstractController
                 break;
             }
         }
-    
-        // Si l'utilisateur n'a pas encore liké ce profil, on crée une correspondance (match)
+
+        // Si l'utilisateur n'a pas encore liké ce profil, on crée un like
         if (!$alreadyLiked) {
-            $match = new Matches();
-            $match->setProfil1($currentUser->getProfil());
-            $match->setProfil2($likedProfil);
-            $entityManager->persist($match);
+            $like = new Like();
+            $like->setProfil($likedProfil);
+            $like->setUser($currentUser);
+            $entityManager->persist($like);
             $entityManager->flush();
-    
-            // On ajoute la correspondance à l'utilisateur actuel
-            $currentUser->addMatch($match);
-            $entityManager->persist($currentUser);
+
+            $userLiked = false;
+            foreach ($likedUser->getLikes() as $like) {
+                if ($like->getProfil()->getId() == $curentProfil->getId()) {
+                    $userLiked = true;
+                    break;
+                }
+            }
+
+            if ($userLiked) {
+                $conversation = new Conversation();
+                $conversation->setDebutConversation(new \DateTime());
+                $conversation->setFinConversation(new \DateTime());
+                $entityManager->persist($conversation);
+                $entityManager->flush();
+                $match = new Matches();
+                $match->setProfil1($curentProfil);
+                $match->setProfil2($likedProfil);
+                $match->setIdConversation($conversation->getId());
+                $entityManager->persist($match);
+            }
+
             $entityManager->flush();
         }
-    
+
+
         // Redirection vers la page de rencontre
         return $this->redirectToRoute('rencontre');
     }

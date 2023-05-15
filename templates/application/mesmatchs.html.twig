@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mes matchs
+{% endblock %}
+{% block body %}
+    {% if not app.user %}
+        <p class="centrer">
+            Vous n'êtes pas connecté
+        </p>
+    {% endif %}
+    {% if app.user %}
+        {% if matchedProfils == null %}
+            <p class="centrer">Vous n'avez pas encore de matchs</p>
+        {% endif %}
+        <div class="vignette d-flex justify-content-center align-items-center flex-wrap">
+            {% for profil in matchedProfils %}
+                {% if profil.user != app.user %}
+                    <div class="contenu">
+                        <div class="card mb-4" style="max-width: 18rem;">
+                            {% for photo in photoProfil %}
+                                {% if profil.id == photo.profil.id %}
+                                    <img src="{{ asset('Images/' ~ photo.nom) }}" class="card-img-top" alt="photo de {{ profil.prenom }}">
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ profil.prenom }}
+                                        {{ profil.age }}
+                                        ans</h5>
+                                    <p class="card-text">Centres d'intérêts :
+                                        {{ profil.centreInterets }}
+                                        <br>Destinations souhaitées :
+                                            {{ profil.DestinationsSouhaitees }}<br>Budget moyen :
+                                                {{ profil.budget }}</p>
+                                            <a href="#" class="btn btn-primary">Discuter</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <style>
+                        .vignette {
+                            margin-top: 50px;
+                            margin-bottom: 50px;
+                        }
+                        .card {
+                            margin-bottom: 20px;
+                            margin-right: 10px;
+                            margin-left: 10px;
+                        }
+                        .centrer {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin-top: 150px;
+                            margin-bottom: 190px;
+                        }
+                        /* Pour les écrans de petite taille */
+                        @media screen and(max-width: 767px) {
+                            .contenu {
+                                width: 100%;
+                            }
+                        }
+                        /* Pour les écrans de taille moyenne */
+                        @media screen and(min-width: 768px) and(max-width: 991px) {
+                            .contenu {
+                                width: 50%;
+                            }
+                        }
+                        /* Pour les écrans larges */
+                        @media screen and(min-width: 992px) {
+                            .vignette {
+                                display: flex;
+                                justify-content: center;
+                            }
+                        }
+                    </style>
+                {% endblock %}

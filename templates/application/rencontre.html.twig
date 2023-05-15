@@ -4,26 +4,28 @@
 {% block body %}
     <div class="vignette d-flex justify-content-center align-items-center flex-wrap">
         {% for profil in profils %}
-            <div class="contenu">
-                <div class="card mb-4" style="max-width: 18rem;">
-                    {% for photo in photoProfil %}
-                        {% if profil.id == photo.profil.id %}
-                            <img src="{{ asset('Images/' ~ photo.nom) }}" class="card-img-top" alt="photo de {{ profil.prenom }}">
-                            {% endif %}
-                        {% endfor %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ profil.prenom }}
-                                {{ profil.age }}
-                                ans</h5>
-                            <p class="card-text">Centres d'intérêts :
-                                {{ profil.centreInterets }}
-                                <br>Destinations souhaitées :
-                                    {{ profil.DestinationsSouhaitees }}<br>Budget moyen :
-                                        {{ profil.budget }}</p>
-                                    <a href="{{ path('rencontre', {'profilId':profil.id}) }}" class="btn btn-primary">Liker</a>
+            {% if profil.user != app.user %}
+                <div class="contenu">
+                    <div class="card mb-4" style="max-width: 18rem;">
+                        {% for photo in photoProfil %}
+                            {% if profil.id == photo.profil.id %}
+                                <img src="{{ asset('Images/' ~ photo.nom) }}" class="card-img-top" alt="photo de {{ profil.prenom }}">
+                                {% endif %}
+                            {% endfor %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ profil.prenom }}
+                                    {{ profil.age }}
+                                    ans</h5>
+                                <p class="card-text">Centres d'intérêts :
+                                    {{ profil.centreInterets }}
+                                    <br>Destinations souhaitées :
+                                        {{ profil.DestinationsSouhaitees }}<br>Budget moyen :
+                                            {{ profil.budget }}</p>
+                                        <a href="{{ path('match', {'profilId':profil.id}) }}" class="btn btn-primary">Liker</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                     <style>
                         .vignette {
