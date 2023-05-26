@@ -30,8 +30,7 @@
                                         <br>Destinations souhaitées :
                                             {{ profil.DestinationsSouhaitees }}<br>Budget moyen :
                                                 {{ profil.budget }}</p>
-                                            <a href="#" class="btn btn-primary">Discuter</a>
-
+                                            <a href="{{ path('conversation', {'profilId': profil.id}) }}">Démarrer une conversation</a>
                                         </div>
                                     </div>
                                 </div>
