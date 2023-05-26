@@ -68,10 +68,15 @@ class PlaceRencontreController extends AbstractController
             }
 
             if ($userLiked) {
+                $conversation = new Conversation();
+                $conversation->setDebutConversation(new \DateTime());
+                $conversation->setFinConversation(new \DateTime());
+                $entityManager->persist($conversation);
                 $entityManager->flush();
                 $match = new Matches();
                 $match->setProfil1($curentProfil);
                 $match->setProfil2($likedProfil);
+                $match->setIdConversation($conversation->getId());
                 $entityManager->persist($match);
             }
 

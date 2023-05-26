@@ -80,6 +80,9 @@ class CreationProfilController extends AbstractController
                 $photoProfil->setNom($newFilename);
             }
 
+            $user = $this->getUser(); // Récupérer l'utilisateur actuellement connecté
+            $profil = new Profil();
+
             $entityManager->persist($photoProfil);
             $entityManager->flush();
             $this->addFlash('success', 'Image enregistrée!');
